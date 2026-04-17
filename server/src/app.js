@@ -13,9 +13,17 @@ const allowedOrigins = [
   'http://localhost:5000'
 ];
 
+const allowedOrigins = [
+  'https://mintcream-pheasant-479607.hostingersite.com',
+  'https://forestgreen-stingray-266357.hostingersite.com',
+  'http://localhost:5173',
+  'http://localhost:5000'
+];
+
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    // Allows any .hostingersite.com subdomain for convenience during deployment
+    if (!origin || allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.hostingersite.com')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
