@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 min-h-screen font-sans;
+  background: radial-gradient(circle at top left, #f0f9ff 0%, #f8fafc 100%);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-primary {
+  @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-xl 
+         transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2;
+}
+
+.btn-secondary {
+  @apply bg-secondary-600 hover:bg-secondary-700 text-white font-medium py-2 px-6 rounded-xl 
+         transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 flex items-center justify-center gap-2;
+}
+
+.status-available { @apply bg-secondary-500 text-white; }
+.status-reserved { @apply bg-amber-500 text-white; }
+.status-booked { @apply bg-rose-500 text-white; }
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
