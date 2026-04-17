@@ -13,13 +13,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Auto-redirect logged-in customers to their bookings
-  useEffect(() => {
-    if (user && profile?.role === 'user') {
-      navigate('/my-bookings');
-    }
-  }, [user, profile, navigate]);
-
   useEffect(() => {
     const fetchRooms = async () => {
       try {
