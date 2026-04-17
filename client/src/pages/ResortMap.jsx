@@ -187,8 +187,13 @@ const ResortMap = () => {
                   onClick={() => bookRoom(selectedRoom.id)}
                   className="w-full py-5 bg-slate-900 text-white rounded-[2rem] text-lg font-black uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-2xl shadow-slate-100 transform active:scale-95"
                 >
-                   ยืนยันรายการจอง
+                   {user ? 'ยืนยันรายการจอง' : 'เข้าสู่ระบบเพื่อจองห้องพัก'}
                 </button>
+                {!user && (
+                  <p className="text-center text-rose-500 text-[10px] font-bold uppercase tracking-widest mt-4">
+                    ⚠️ เฉพาะสมาชิกเท่านั้นที่สามารถทำรายการจองได้
+                  </p>
+                )}
               </div>
             </motion.div>
           </motion.div>
