@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { LogIn, Mail, Lock } from 'lucide-react';
+import { LogIn, Mail, Lock, CheckCircle } from 'lucide-react';
 
 const Login = () => {
+  const location = useLocation();
+  const successMessage = location.state?.message;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -39,6 +41,13 @@ const Login = () => {
           <h1 className="text-3xl font-bold text-slate-800">ยินดีต้อนรับ</h1>
           <p className="text-slate-500 mt-2">เข้าสู่ระบบเพื่อจัดการการจองของคุณ</p>
         </div>
+
+        {successMessage && (
+          <div className="bg-emerald-50 text-emerald-600 p-4 rounded-xl text-sm mb-6 border border-emerald-100 flex items-center gap-3">
+            <CheckCircle size={18} />
+            <span>{successMessage}</span>
+          </div>
+        )}
 
         {error && <div className="bg-rose-50 text-rose-600 p-4 rounded-xl text-sm mb-6 border border-rose-100">{error}</div>}
 

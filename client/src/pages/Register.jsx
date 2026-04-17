@@ -26,7 +26,8 @@ const Register = () => {
     setError('');
     try {
       await register(formData.email, formData.password, formData.fullName, formData.phone);
-      navigate('/');
+      // Redirect to login with success state
+      navigate('/login', { state: { message: 'สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบเพื่อใช้งาน' } });
     } catch (err) {
       setError(err.message || 'เกิดข้อผิดพลาดในการสมัครสมาชิก');
     } finally {
