@@ -3,13 +3,22 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { MapPin, Star, Wifi, Coffee, Wind } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const API_BASE = 'http://localhost:5000/api';
 
 const Home = () => {
+  const { user, profile } = useAuth();
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  // Auto-redirect logged-in customers to their bookings
+  useEffect(() => {
+    if (user && profile?.role === 'user') {
+      navigate('/my-bookings');
+    }
+  }, [user, profile, navigate]);
 
   useEffect(() => {
     const fetchRooms = async () => {
