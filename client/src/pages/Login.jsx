@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 import { motion } from 'framer-motion';
 import { LogIn, Mail, Lock, CheckCircle } from 'lucide-react';
 
@@ -19,8 +20,20 @@ const Login = () => {
     setLoading(true);
     setError('');
     try {
-      await login(email, password);
-      navigate('/');
+      const { user } = await login(email, password);
+      
+      // Fetch user role to decide where to go
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+      if (profile?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/my-bookings');
+      }
     } catch (err) {
       setError('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
     } finally {
