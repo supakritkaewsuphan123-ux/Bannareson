@@ -7,6 +7,8 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { format } from 'date-fns';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+
 const AdminUsers = () => {
   const { token } = useAuth();
   const [users, setUsers] = useState([]);
@@ -17,7 +19,7 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users', {
+      const res = await fetch(`${API_BASE}/admin/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -41,7 +43,7 @@ const AdminUsers = () => {
     
     setIsProcessing(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${userId}/ban`, {
+      const res = await fetch(`${API_BASE}/admin/users/${userId}/ban`, {
         method: 'PATCH',
         headers: { 
           'Content-Type': 'application/json',

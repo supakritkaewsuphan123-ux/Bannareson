@@ -7,6 +7,8 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+
 const AdminRooms = () => {
   const { token } = useAuth();
   const [rooms, setRooms] = useState([]);
@@ -33,7 +35,7 @@ const AdminRooms = () => {
   const fetchRooms = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/rooms', {
+      const res = await fetch(`${API_BASE}/admin/rooms`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -47,7 +49,7 @@ const AdminRooms = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/settings', {
+      const res = await fetch(`${API_BASE}/admin/settings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -88,7 +90,7 @@ const AdminRooms = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('คุณแน่ใจหรือไม่ว่าต้องการลบห้องนี้?')) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/rooms/${id}`, {
+      const res = await fetch(`${API_BASE}/admin/rooms/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -130,8 +132,8 @@ const AdminRooms = () => {
 
       const body = { ...formData, image_url: finalImageUrl };
       const url = editingRoom 
-        ? `http://localhost:5000/api/admin/rooms/${editingRoom.id}` 
-        : 'http://localhost:5000/api/admin/rooms';
+        ? `${API_BASE}/admin/rooms/${editingRoom.id}` 
+        : `${API_BASE}/admin/rooms`;
       
       const method = editingRoom ? 'PUT' : 'POST';
 

@@ -7,6 +7,8 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { format } from 'date-fns';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+
 const AdminBookings = () => {
   const { token } = useAuth();
   const [bookings, setBookings] = useState([]);
@@ -17,7 +19,7 @@ const AdminBookings = () => {
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/bookings', {
+      const res = await fetch(`${API_BASE}/admin/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

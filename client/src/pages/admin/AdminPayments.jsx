@@ -7,6 +7,8 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import { format } from 'date-fns';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+
 const AdminPayments = () => {
   const { token } = useAuth();
   const [payments, setPayments] = useState([]);
@@ -19,7 +21,7 @@ const AdminPayments = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/payments', {
+      const res = await fetch(`${API_BASE}/admin/payments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -41,7 +43,7 @@ const AdminPayments = () => {
     if (!window.confirm('คุณแน่ใจหรือไม่ว่าต้องการ "อนุมัติ" การชำระเงินนี้?')) return;
     setIsVerifying(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/payments/${bookingId}/approve`, {
+      const res = await fetch(`${API_BASE}/admin/payments/${bookingId}/approve`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -67,7 +69,7 @@ const AdminPayments = () => {
     
     setIsVerifying(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/payments/${bookingId}/reject`, {
+      const res = await fetch(`${API_BASE}/admin/payments/${bookingId}/reject`, {
         method: 'PATCH',
         headers: { 
           'Content-Type': 'application/json',

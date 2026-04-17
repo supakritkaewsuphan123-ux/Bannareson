@@ -5,6 +5,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+
 const AdminSettings = () => {
   const { token } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -21,7 +23,7 @@ const AdminSettings = () => {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/settings', {
+      const res = await fetch(`${API_BASE}/admin/settings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -43,7 +45,7 @@ const AdminSettings = () => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/settings', {
+      const res = await fetch(`${API_BASE}/admin/settings`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ import { Calendar, Clock, CreditCard, ChevronRight, PackageCheck } from 'lucide-
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);

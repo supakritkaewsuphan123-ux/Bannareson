@@ -9,6 +9,8 @@ import {
 } from 'recharts';
 import { useAuth } from '../context/AuthContext';
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
+
 const AdminDashboard = () => {
   const { token } = useAuth();
   const [stats, setStats] = useState(null);
@@ -20,11 +22,11 @@ const AdminDashboard = () => {
     try {
       const settings = { headers: { Authorization: `Bearer ${token}` } };
       
-      const statsRes = await fetch('http://localhost:5000/api/admin/dashboard', settings);
+      const statsRes = await fetch(`${API_BASE}/admin/dashboard`, settings);
       const statsData = await statsRes.json();
       if (statsData.success) setStats(statsData.data);
 
-      const bookingsRes = await fetch('http://localhost:5000/api/admin/bookings', settings);
+      const bookingsRes = await fetch(`${API_BASE}/admin/bookings`, settings);
       const bookingsData = await bookingsRes.json();
       if (bookingsData.success) setRecentBookings(bookingsData.data.slice(0, 5));
     } catch (error) {
